@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Hongbin</title>
-  
-  <link href="/atom.xml" rel="self"/>
-  
-  <link href="http://alayshchen.github.io/"/>
-  <updated>2016-10-22T13:37:25.000Z</updated>
-  <id>http://alayshchen.github.io/</id>
-  
-  <author>
-    <name>Hongbin Chen</name>
-    <email>alayshchen@gmail.com</email>
-  </author>
-  
-  <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>我是如何利用Xcode调试开发微信消息预览插件的</title>
-    <link href="http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/"/>
-    <id>http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/</id>
-    <published>2016-02-26T02:43:34.000Z</published>
-    <updated>2016-10-22T13:37:25.000Z</updated>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Hongbin</title>
+    <link>http://alayshchen.github.io/</link>
+    <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
-    <content type="html"><![CDATA[<p>平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，我该停止阅读还是继续阅读。假如我可以预览消息的话，甚至回复消息后快速回来继续阅读。那太好不过了。<br>学习过iOS逆向开发的话，利用theos在越狱机器上实现还是可以的。但由于日常使用的是非越狱机器，鱼和熊掌都想要，只好在万能的google上寻找资料，终于找到了insert_dylib工具和念茜的博客上动态库注入相关知识。OK，开工！</p>
+    <description>个人博客</description>
+    <pubDate>Sat, 22 Oct 2016 13:37:25 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>我是如何利用Xcode调试开发微信消息预览插件的</title>
+      <link>http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/</link>
+      <guid>http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/</guid>
+      <pubDate>Fri, 26 Feb 2016 02:43:34 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，我该停止阅读还是继续阅读。假如我可以预览消息的话，甚至回复消息后快速回来继续阅读。那太好不过了。&lt;br&gt;学习过iOS逆向开发的话，利用theos在越狱机器上实现还是可以的。但由于日常使用的是非越狱机器，鱼和熊掌都想要，只好在万能的google上寻找资料，终于找到了insert_dylib工具和念茜的博客上动态库注入相关知识。OK，开工！&lt;/p&gt;
+      
+      </description>
+      
+      <content:encoded><![CDATA[<p>平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，我该停止阅读还是继续阅读。假如我可以预览消息的话，甚至回复消息后快速回来继续阅读。那太好不过了。<br>学习过iOS逆向开发的话，利用theos在越狱机器上实现还是可以的。但由于日常使用的是非越狱机器，鱼和熊掌都想要，只好在万能的google上寻找资料，终于找到了insert_dylib工具和念茜的博客上动态库注入相关知识。OK，开工！</p>
 <a id="more"></a>
 <h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="images/0.gif" alt="最终效果图"></p>
 <h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><ol>
@@ -61,27 +61,23 @@
 codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app</code>证书一致  </p>
 <p>脚本中涉及到的WeChat-dump-arm64.ipa需要从越狱机器中提取。<a href="http://alayshchen.github.io/2015/11/05/Resign-AppStore-App/">对App Store App进行重签名–解密[上]</a></p>
 <h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><p><a href="https://github.com/Tyilo/insert_dylib" target="_blank" rel="external">insert_dylib</a><br><a href="http://www.cocoachina.com/industry/20140211/7800_4.html" target="_blank" rel="external">iOS安全攻防（十二）：iOS7的动态库注入</a></p>
-]]></content>
+]]></content:encoded>
+      
+      <comments>http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;p&gt;平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，我该停止阅读还是继续阅读。假如我可以预览消息的话，甚至回复消息后快速回来继续阅读。那太好不过了。&lt;br&gt;学习过iOS逆向开发的话，利用theos在越狱机器上实现还是可以的。但由于日常使用的是非越狱机器，鱼和熊掌都想要，只好在万能的google上寻找资料，终于找到了insert_dylib工具和念茜的博客上动态库注入相关知识。OK，开工！&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="iOS逆向开发" scheme="http://alayshchen.github.io/tags/iOS%E9%80%86%E5%90%91%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对App Store App进行重签名--解密</title>
-    <link href="http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/"/>
-    <id>http://alayshchen.github.io/2015/11/05/对App-Store-App进行重签名-解密/</id>
-    <published>2015-11-05T13:45:41.000Z</published>
-    <updated>2016-10-22T13:56:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>Clutch <a href="https://github.com/KJCracks/Clutch" target="_blank" rel="external">https://github.com/KJCracks/Clutch</a></p>
+    <item>
+      <title>对App Store App进行重签名--解密</title>
+      <link>http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/</link>
+      <guid>http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/</guid>
+      <pubDate>Thu, 05 Nov 2015 13:45:41 GMT</pubDate>
+      <description>
+      
+        &lt;h3 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工具&lt;/h3&gt;&lt;p&gt;Clutch &lt;a href=&quot;https://github.com/KJCracks/Clutch&quot; target=&quot;_blank&quot; re
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>Clutch <a href="https://github.com/KJCracks/Clutch" target="_blank" rel="external">https://github.com/KJCracks/Clutch</a></p>
 <p>dumpdecrypted <a href="https://github.com/stefanesser/dumpdecrypted" target="_blank" rel="external">https://github.com/stefanesser/dumpdecrypted</a></p>
 <p>说明<br>dumpdecrypted需要手动解密可执行文件，并对解密结果进行瘦身，再拷贝资源文件构建ipa包。<br>Clutch支持解密可执行文件或ipa，使用起来比较简单(一条龙服务，完成了1中的所有步骤)。<br>完全手动解密的做法在《iOS应用安全攻防实战》中的“加密的二进制文件”有详细介绍。</p>
 <h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>将应用程序运行（系统在此前会解密程序），将内存中的代码转存为另外一个可执行文件。<br>注意<br>通过dumpdecrypted得到的可执行文件其实不是完全解密过的，机器是arm64的话就只能解密arm64那部分。<br>通过命令<br>lipo -thin arm64 <em>.decrypted -o </em>-arm64.decrypted可获得纯净的可执行文件。</p>
@@ -109,17 +105,10 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 <li><p>执行命令zip -qry WeChat.ipa Payload/WeChat.app得到ipa包 放到越狱机器上安装(ipainstaller) 什么？！安装失败？！查看log 嗯～签名验证失败。别担心，面包会有的。<br><img src="images/9.png" alt=""></p>
 </li>
 </ol>
-]]></content>
+]]></content:encoded>
+      
+      <comments>http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/#disqus_thread</comments>
+    </item>
     
-    <summary type="html">
-    
-      &lt;h3 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工具&lt;/h3&gt;&lt;p&gt;Clutch &lt;a href=&quot;https://github.com/KJCracks/Clutch&quot; target=&quot;_blank&quot; re
-    
-    </summary>
-    
-    
-      <category term="iOS逆向开发" scheme="http://alayshchen.github.io/tags/iOS%E9%80%86%E5%90%91%E5%BC%80%E5%8F%91/"/>
-    
-  </entry>
-  
-</feed>
+  </channel>
+</rss>
