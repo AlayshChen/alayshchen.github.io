@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Hongbin</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://alayshchen.github.io/"/>
+  <updated>2016-10-22T13:37:25.000Z</updated>
+  <id>http://alayshchen.github.io/</id>
+  
+  <author>
+    <name>Hongbin Chen</name>
+    <email>alayshchen@gmail.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>我是如何利用Xcode调试开发微信消息预览插件的</title>
+    <link href="http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/"/>
+    <id>http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/</id>
+    <published>2016-02-26T02:43:34.000Z</published>
+    <updated>2016-10-22T13:37:25.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，我该停止阅读还是继续阅读。假如我可以预览消息的话，甚至回复消息后快速回来继续阅读。那太好不过了。<br>学习过iOS逆向开发的话，利用theos在越狱机器上实现还是可以的。但由于日常使用的是非越狱机器，鱼和熊掌都想要，只好在万能的google上寻找资料，终于找到了insert_dylib工具和念茜的博客上动态库注入相关知识。OK，开工！</p>
+<a id="more"></a>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="images/0.gif" alt="最终效果图"></p>
+<h3 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h3><ol>
+<li>公众号文章界面（网页）：收到消息后，显示消息内容</li>
+<li>公众号文章界面（网页）：点击消息内容进入对应聊天界面</li>
+<li>聊天界面：点击网页标志，跳回公众号文章界面（网页）</li>
+</ol>
+<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><p>结合需求，需要hook的主要是微信消息通知Method，聊天界面ViewController，网页ViewController。利用工具class-dump, Hopper Disassembler很快定位出需要hook的微信代码，<code>-[CMessageMgr AsyncOnAddMsg:MsgWrap:]</code> <code>-[BaseMsgContentViewController viewDidLoad]</code> <code>-[MMWebViewController viewDidLoad]</code></p>
+<h3 id="磨刀霍霍"><a href="#磨刀霍霍" class="headerlink" title="磨刀霍霍"></a>磨刀霍霍</h3><p>定位出hook代码段，接下来要做的就是写代码了。    </p>
+<ol>
+<li>Xcode现在支持建立动态库工程，但生成的是framework，可以通过修改工程文件下的project.pbxproj <code>productType = &quot;com.apple.product-type.framework&quot;; =&gt; productType = &quot;com.apple.product-type.library.dynamic&quot;</code><br><img src="images/1.png" alt="xcode建立framework图">  </li>
+<li>利用iOSOpenDev也可以快速生成动态库工程。<br><img src="images/2.png" alt="iosopendev建立dylib图"></li>
+</ol>
+<p>这里注意要设置好签名证书，后续可能因为证书问题导致失败。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)cb_AsyncOnAddMsg:(NSString *)msg MsgWrap:(CMessageWrap *)wrap &#123;</div><div class="line">    [self cb_AsyncOnAddMsg:msg MsgWrap:wrap];</div><div class="line">    </div><div class="line">    [CBNewestMsgManager sharedInstance].username = msg;</div><div class="line">    [CBNewestMsgManager sharedInstance].content = wrap.m_nsContent;</div><div class="line">    </div><div class="line">    [[NSNotificationCenter defaultCenter] postNotificationName:CBWeChatNewMessageNotification object:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)cb_msgContentViewControllerViewDidLoad &#123;</div><div class="line">    [self cb_msgContentViewControllerViewDidLoad];</div><div class="line">    </div><div class="line">    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 40, 74, 40, 40)];</div><div class="line">    UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@&quot;WeChatMsgPreview_safari@2x&quot; ofType:@&quot;png&quot;]];</div><div class="line">    [button setImage:image forState:UIControlStateNormal];</div><div class="line">    [button addTarget:self action:@selector(backToWebViewController) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [self.view addSubview:button];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)cb_webViewControllerViewDidLoad &#123;</div><div class="line">    [self cb_webViewControllerViewDidLoad];</div><div class="line">    </div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cb_didReceiveNewMessage) name:CBWeChatNewMessageNotification object:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)cb_didReceiveNewMessage &#123;</div><div class="line">    NSString *username = [CBNewestMsgManager sharedInstance].username;</div><div class="line">    NSString *content = [CBNewestMsgManager sharedInstance].content;</div><div class="line">    CContactMgr *contactMgr = [[objc_getClass(&quot;MMServiceCenter&quot;) defaultCenter] getService:[objc_getClass(&quot;CContactMgr&quot;) class]];</div><div class="line">    CContact *contact = [contactMgr getContactByName:username];</div><div class="line">    </div><div class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSString *text = [NSString stringWithFormat:@&quot;  %@: %@  &quot;, contact.m_nsNickName, content];</div><div class="line">        [CBMessageHud showHUDInView:self.view text:text target:self action:@selector(backToMsgContentViewController)];</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)backToWebViewController &#123;</div><div class="line">    NSArray *webViewViewControllers = [CBNewestMsgManager sharedInstance].webViewViewControllers;</div><div class="line">    if (webViewViewControllers) &#123;</div><div class="line">        [[objc_getClass(&quot;CAppViewControllerManager&quot;) getCurrentNavigationController] setViewControllers:webViewViewControllers animated:YES];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)backToMsgContentViewController &#123;</div><div class="line">    // 返回聊天界面ViewController前记录当前navigationController的VC堆栈，以便快速返回</div><div class="line">    NSArray *webViewViewControllers = [objc_getClass(&quot;CAppViewControllerManager&quot;) getCurrentNavigationController].viewControllers;</div><div class="line">    [CBNewestMsgManager sharedInstance].webViewViewControllers = webViewViewControllers;</div><div class="line">    </div><div class="line">    // 返回rootViewController</div><div class="line">    UINavigationController *navVC = [objc_getClass(&quot;CAppViewControllerManager&quot;) getCurrentNavigationController];</div><div class="line">    [navVC popToRootViewControllerAnimated:NO];</div><div class="line">    </div><div class="line">    // 进入聊天界面ViewController</div><div class="line">    NSString *username = [CBNewestMsgManager sharedInstance].username;</div><div class="line">    CContactMgr *contactMgr = [[objc_getClass(&quot;MMServiceCenter&quot;) defaultCenter] getService:[objc_getClass(&quot;CContactMgr&quot;) class]];</div><div class="line">    CContact *contact = [contactMgr getContactByName:username];</div><div class="line">    MMMsgLogicManager *logicMgr = [[objc_getClass(&quot;MMServiceCenter&quot;) defaultCenter] getService:[objc_getClass(&quot;MMMsgLogicManager&quot;) class]];</div><div class="line">    [logicMgr PushOtherBaseMsgControllerByContact:contact navigationController:navVC animated:YES];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后关键的一步~</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#define CBHookInstanceMethod(classname, ori_sel, new_sel) \</div><div class="line">\</div><div class="line">&#123; \</div><div class="line">Class class = objc_getClass(#classname); \</div><div class="line">Method ori_method = class_getInstanceMethod(class, ori_sel); \</div><div class="line">Method new_method = class_getInstanceMethod(class, new_sel); \</div><div class="line">method_exchangeImplementations(ori_method, new_method); \</div><div class="line">&#125; \</div><div class="line">\</div><div class="line"></div><div class="line">static void __attribute__((constructor)) initialize(void) &#123;</div><div class="line">    CBHookInstanceMethod(CMessageMgr, @selector(AsyncOnAddMsg:MsgWrap:), @selector(cb_AsyncOnAddMsg:MsgWrap:));</div><div class="line">    CBHookInstanceMethod(BaseMsgContentViewController, @selector(viewDidLoad), @selector(cb_msgContentViewControllerViewDidLoad));</div><div class="line">    CBHookInstanceMethod(MMWebViewController, @selector(viewDidLoad), @selector(cb_webViewControllerViewDidLoad));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>好了，command＋B 成功生成动态库文件，下一步，利用insert_dylib修改微信可执行文件，重签名，生成新的微信app，安装到手机。嗯嗯，这样文章到这里就结束了～～<br>慢着，真正开发时哪会这么简单，代码一次成功。一旦代码出现问题，我们需要一直手动重复这样的工作：修改代码，生成dylib，修改微信可执行文件，重签名，生成新的app，安装到手机。<br>注意注意，博文的标题里有“调试”，调试！！！怎么做呢？</p>
+<h3 id="偷天换日"><a href="#偷天换日" class="headerlink" title="偷天换日"></a>偷天换日</h3><p>细心观察可以发现  </p>
+<ol>
+<li>任意一个app工程，run后在Derived Data文件夹都有对应的.app文件  </li>
+<li>在Build Phases中增加Run Script，可以在编译工程后执行自定义脚本。</li>
+</ol>
+<p>于是，一招偷天换日招数就想出来了（通过脚本，在编译工程后，利用新生成的动态库生成WeChat.app, 替换原有目录下的app文件）</p>
+<ol>
+<li>在原有工程中增加Application Target</li>
+<li>在Build Phases中设置Target Dependencies，增加dylib，确保每次run app都会编译最新的dylib<br><img src="images/3.png" alt="工程设置图">  </li>
+<li>然后增加Run Script（修改微信可执行文件，重签名，生成新的app）<br>接下来的事情（安装app，打开手机app，lldb调试）就交给Xcode做了。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line">BUNDLEIDENTIFIER=com.tencent.xin</div><div class="line">APPLICATIONIDENTIFIER=***.$&#123;BUNDLEIDENTIFIER&#125;</div><div class="line">WECHATFILEPATH=***/apps/WeChat</div><div class="line">LIBNAME=$(find *.dylib)</div><div class="line">TEMPDIR=$(mktemp -d)</div><div class="line">ORIGINDIR=$(pwd)</div><div class="line"></div><div class="line"># 0.get argv</div><div class="line"></div><div class="line">if [ x$1 != x ]</div><div class="line">then</div><div class="line">	BUNDLEIDENTIFIER=$1</div><div class="line">fi</div><div class="line"></div><div class="line"># 1.unzip ipa</div><div class="line"></div><div class="line">if [ $arch == &quot;arm64&quot; ]</div><div class="line">then</div><div class="line">unzip -qo $&#123;WECHATFILEPATH&#125;/WeChat-dump-arm64.ipa -d $TEMPDIR</div><div class="line">else</div><div class="line">unzip -qo $&#123;WECHATFILEPATH&#125;/WeChat-dump-armv7.ipa -d $TEMPDIR</div><div class="line">fi</div><div class="line"></div><div class="line"># 2.copy files</div><div class="line">cp $&#123;WECHATFILEPATH&#125;/embedded.mobileprovision $TEMPDIR/</div><div class="line">cp $&#123;WECHATFILEPATH&#125;/entitlements.plist $TEMPDIR/</div><div class="line">cp $&#123;LIBNAME&#125; $TEMPDIR/</div><div class="line"></div><div class="line"># 3.resign</div><div class="line">cd $TEMPDIR</div><div class="line">plutil -replace application-identifier -string $&#123;APPLICATIONIDENTIFIER&#125; entitlements.plist</div><div class="line">plutil -replace CFBundleIdentifier -string $&#123;BUNDLEIDENTIFIER&#125; Payload/WeChat.app/Info.plist</div><div class="line"></div><div class="line">mv $&#123;LIBNAME&#125; Payload/WeChat.app/</div><div class="line">insert_dylib --all-yes @executable_path/$&#123;LIBNAME&#125; Payload/WeChat.app/WeChat</div><div class="line">mv Payload/WeChat.app/WeChat_patched Payload/WeChat.app/WeChat</div><div class="line">chmod +x Payload/WeChat.app/WeChat</div><div class="line"></div><div class="line">rm -rf Payload/WeChat.app/_CodeSignature</div><div class="line">rm -rf Payload/WeChat.app/PlugIns</div><div class="line">rm -rf Payload/WeChat.app/Watch</div><div class="line">cp embedded.mobileprovision Payload/WeChat.app/</div><div class="line">codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app/$&#123;LIBNAME&#125;</div><div class="line">codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app</div><div class="line"></div><div class="line"># 4.end</div><div class="line"></div><div class="line">mv Payload/WeChat.app $&#123;ORIGINDIR&#125;</div><div class="line">rm -rf $&#123;TEMPDIR&#125;</div></pre></td></tr></table></figure>
+<p><img src="images/4.png" alt="调试效果图"></p>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">dyld: Library not loaded: @executable_path/libWeChatMsgPreview.dylib</div><div class="line">  Referenced from: /var/mobile/Containers/Bundle/Application/55148CD1-0D6E-4F6B-B55C-08261695B408/WeChat.app/WeChat</div><div class="line">  Reason: image not found</div></pre></td></tr></table></figure>
+<p>原因：没拷贝libWeChatMsgPreview.dylib到WeChat.app目录下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">dyld: Library not loaded: @executable_path/libWeChatMsgPreview.dylib</div><div class="line">  Referenced from: /var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/WeChat</div><div class="line">  Reason: no suitable image found.  Did find:</div><div class="line">	/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib: mmap() errno=1 validating first page of &apos;/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib&apos;</div><div class="line">	/private/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib: mmap() errno=1 validating first page of &apos;/private/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib&apos;</div></pre></td></tr></table></figure>
+<p>原因：签名不对，需保持重签名时<code>codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app/${LIBNAME}
+codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app</code>证书一致  </p>
+<p>脚本中涉及到的WeChat-dump-arm64.ipa需要从越狱机器中提取。<a href="http://alayshchen.github.io/2015/11/05/Resign-AppStore-App/">对App Store App进行重签名–解密[上]</a></p>
+<h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><p><a href="https://github.com/Tyilo/insert_dylib" target="_blank" rel="external">insert_dylib</a><br><a href="http://www.cocoachina.com/industry/20140211/7800_4.html" target="_blank" rel="external">iOS安全攻防（十二）：iOS7的动态库注入</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，我该停止阅读还是继续阅读。假如我可以预览消息的话，甚至回复消息后快速回来继续阅读。那太好不过了。&lt;br&gt;学习过iOS逆向开发的话，利用theos在越狱机器上实现还是可以的。但由于日常使用的是非越狱机器，鱼和熊掌都想要，只好在万能的google上寻找资料，终于找到了insert_dylib工具和念茜的博客上动态库注入相关知识。OK，开工！&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="iOS逆向开发" scheme="http://alayshchen.github.io/tags/iOS%E9%80%86%E5%90%91%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>对App Store App进行重签名--解密</title>
+    <link href="http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/"/>
+    <id>http://alayshchen.github.io/2015/11/05/对App-Store-App进行重签名-解密/</id>
+    <published>2015-11-05T13:45:41.000Z</published>
+    <updated>2016-10-22T13:56:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><p>Clutch <a href="https://github.com/KJCracks/Clutch" target="_blank" rel="external">https://github.com/KJCracks/Clutch</a></p>
+<p>dumpdecrypted <a href="https://github.com/stefanesser/dumpdecrypted" target="_blank" rel="external">https://github.com/stefanesser/dumpdecrypted</a></p>
+<p>说明<br>dumpdecrypted需要手动解密可执行文件，并对解密结果进行瘦身，再拷贝资源文件构建ipa包。<br>Clutch支持解密可执行文件或ipa，使用起来比较简单(一条龙服务，完成了1中的所有步骤)。<br>完全手动解密的做法在《iOS应用安全攻防实战》中的“加密的二进制文件”有详细介绍。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>将应用程序运行（系统在此前会解密程序），将内存中的代码转存为另外一个可执行文件。<br>注意<br>通过dumpdecrypted得到的可执行文件其实不是完全解密过的，机器是arm64的话就只能解密arm64那部分。<br>通过命令<br>lipo -thin arm64 <em>.decrypted -o </em>-arm64.decrypted可获得纯净的可执行文件。</p>
+<h3 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h3><h4 id="Clutch"><a href="#Clutch" class="headerlink" title="Clutch"></a>Clutch</h4><ol>
+<li><p>查看应用列表<br>命令: Clutch -i<br><img src="images/0.png" alt=""></p>
+</li>
+<li><p>dump应用<br>命令: Clutch -d &lt;应用编号&gt;</p>
+</li>
+</ol>
+<p><img src="images/1.png" alt=""></p>
+<ol>
+<li>dumping~~成功后可在/private/var/mobile/Documents/Dumped/目录下看到dump的ipa包.</li>
+</ol>
+<p><img src="images/2.png" alt=""></p>
+<h4 id="dumpdecrypted"><a href="#dumpdecrypted" class="headerlink" title="dumpdecrypted"></a>dumpdecrypted</h4><ol>
+<li>利用Cycript找到程序Documents文件夹<br>命令: cycript -p 二进制文件名(通过px ax得到)<br>[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0]<br><img src="images/3.png" alt=""></li>
+<li><p>进入Documents文件夹，准备dump<br><img src="images/4.png" alt=""><br><img src="images/5.png" alt=""></p>
+</li>
+<li><p>对dump结果进行净化<br><img src="images/6.png" alt=""></p>
+</li>
+<li><p>拷贝应用程序文件夹 如上中的/var/mobile/Containers/Bundle/Application/E359F7D8-8769-4A2F-B12E-1F3EEB34E719/文件夹， 得到<br><img src="images/7.png" alt=""></p>
+</li>
+<li><p>将dump得到的WeChat-arm64.decrypted重命名为WeChat 替换WeChat.app里的WeChat 建立Payload文件夹 放进WeChat.app 得到目录<br><img src="images/8.png" alt=""></p>
+</li>
+<li><p>执行命令zip -qry WeChat.ipa Payload/WeChat.app得到ipa包 放到越狱机器上安装(ipainstaller) 什么？！安装失败？！查看log 嗯～签名验证失败。别担心，面包会有的。<br><img src="images/9.png" alt=""></p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;工具&quot;&gt;&lt;a href=&quot;#工具&quot; class=&quot;headerlink&quot; title=&quot;工具&quot;&gt;&lt;/a&gt;工具&lt;/h3&gt;&lt;p&gt;Clutch &lt;a href=&quot;https://github.com/KJCracks/Clutch&quot; target=&quot;_blank&quot; re
+    
+    </summary>
+    
+    
+      <category term="iOS逆向开发" scheme="http://alayshchen.github.io/tags/iOS%E9%80%86%E5%90%91%E5%BC%80%E5%8F%91/"/>
+    
+  </entry>
+  
+</feed>
