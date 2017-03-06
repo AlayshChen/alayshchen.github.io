@@ -8,8 +8,58 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>个人博客</description>
-    <pubDate>Sat, 22 Oct 2016 13:37:25 GMT</pubDate>
+    <pubDate>Mon, 06 Mar 2017 16:05:28 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>如何愉快地在Mac上刷朋友圈</title>
+      <link>http://alayshchen.github.io/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/</link>
+      <guid>http://alayshchen.github.io/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/</guid>
+      <pubDate>Mon, 06 Mar 2017 16:03:18 GMT</pubDate>
+      <description>
+      
+        &lt;h2 id=&quot;事出有因&quot;&gt;&lt;a href=&quot;#事出有因&quot; class=&quot;headerlink&quot; title=&quot;事出有因&quot;&gt;&lt;/a&gt;事出有因&lt;/h2&gt;&lt;p&gt;从前，有一款Mac软件，在2014.11.10发布了1.2版本，然后就没有然后了。 可能这期间，Mac微信开发组解散了又重建
+      
+      </description>
+      
+      <content:encoded><![CDATA[<h2 id="事出有因"><a href="#事出有因" class="headerlink" title="事出有因"></a>事出有因</h2><p>从前，有一款Mac软件，在2014.11.10发布了1.2版本，然后就没有然后了。 可能这期间，Mac微信开发组解散了又重建，解散了又重建。。。直到2016.08.16，它终于发布了2.0版本，这就是Mac微信。<br>不可否认，它越来越好用，但它应该可以更好用。例如，对于朋友圈重度用户，在Mac上使用微信聊天之余，浏览下朋友圈，想来也是极好的。<br>也是早在2.0版本，我发现了Mac微信中已经存在朋友圈相关网络接口代码，没想到半年多过去了，它还是这副死样。俗话说得好，自己动手，丰衣足食，干！！！</p>
+<p><img src="images/0.png" alt=""></p>
+<p>注：接下来内容涉及修改微信，相关代码纯属技术研究与爱好，请大家尊重腾讯公司对微信软件的知识产权，不要乱来。</p>
+<h2 id="厉兵秣马"><a href="#厉兵秣马" class="headerlink" title="厉兵秣马"></a>厉兵秣马</h2><p>要想工作做得好,前期基础要打好！  </p>
+<ol>
+<li>与iOS类似，Mac上的hook也是以注入动态库的方式实现的。Xcode提供了动态库的模版，我们只需要简单的几行脚本就可以实现注入动态库。    </li>
+</ol>
+<p><img src="images/1.png" alt=""></p>
+<p>选择Build Phases-&gt;New Run Script Phase</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">app_name=&quot;WeChat&quot;</div><div class="line">framework_name=&quot;MacWeChatTimeLinePlugin&quot;</div><div class="line"></div><div class="line">app_bundle_path=&quot;/Applications/$&#123;app_name&#125;.app/Contents/MacOS&quot;</div><div class="line">app_executable_path=&quot;$&#123;app_bundle_path&#125;/$&#123;app_name&#125;&quot;</div><div class="line">app_executable_backup_path=&quot;$&#123;app_executable_path&#125;_&quot;</div><div class="line">framework_path=&quot;$&#123;app_bundle_path&#125;/$&#123;framework_name&#125;.framework&quot;</div><div class="line"></div><div class="line"># 备份WeChat原始可执行文件</div><div class="line">if [ ! -f &quot;$app_executable_backup_path&quot; ]</div><div class="line">then</div><div class="line">	cp &quot;$app_executable_path&quot; &quot;$app_executable_backup_path&quot;</div><div class="line">fi</div><div class="line"></div><div class="line">cp -r &quot;$&#123;BUILT_PRODUCTS_DIR&#125;/$&#123;framework_name&#125;.framework&quot; $&#123;app_bundle_path&#125;</div><div class="line"></div><div class="line">insert_dylib --all-yes &quot;$&#123;framework_path&#125;/$&#123;framework_name&#125;&quot; &quot;$app_executable_backup_path&quot; &quot;$app_executable_path&quot;</div></pre></td></tr></table></figure>
+<p><img src="images/2.png" alt=""></p>
+<p>2.编辑Scheme，选择executable为WeChat.app</p>
+<p><img src="images/3.png" alt=""></p>
+<p>3.编辑Podfile</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">platform :osx, &apos;10.10&apos;</div><div class="line"></div><div class="line">target &apos;MacWeChatTimeLinePlugin&apos; do</div><div class="line">    pod &apos;JRSwizzle&apos;, &apos;~&gt; 1.0&apos;</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>4.宏定义</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#define CBGetClass(classname) objc_getClass(#classname)</div><div class="line">#define CBRegisterClass(superclassname, subclassname) &#123; Class class = objc_allocateClassPair(CBGetClass(superclassname), #subclassname, 0);objc_registerClassPair(class); &#125;</div><div class="line">#define CBHookInstanceMethod(classname, ori_sel, new_sel) &#123; NSError *error; [CBGetClass(classname) jr_swizzleMethod:ori_sel withMethod:new_sel error:&amp;error]; if(error) NSLog(@&quot;%@&quot;, error); &#125;</div><div class="line">#define CBHookClassMethod(classname, ori_sel, new_sel) &#123; NSError *error; [CBGetClass(classname) jr_swizzleClassMethod:ori_sel withClassMethod:new_sel error:&amp;error]; if(error) NSLog(@&quot;%@&quot;, error); &#125;</div><div class="line">#define CBGetInstanceValue(obj, valuename) object_getIvar(obj, class_getInstanceVariable([obj class], #valuename))</div><div class="line">#define CBSetInstanceValue(obj, valuename, value) object_setIvar(obj, class_getInstanceVariable([obj class], #valuename), value)</div></pre></td></tr></table></figure>
+<p>如此一来，基础工作就做好了，现在按下Command+R, 就能debug注入了插件的微信了。</p>
+<h2 id="知己知彼"><a href="#知己知彼" class="headerlink" title="知己知彼"></a>知己知彼</h2><p>在实现Mac端朋友圈前，先看看iOS端是怎么实现的。怎么看呢？<br>从UI入手，我们知道，iOS上实现下拉刷新，是通过检测tableView的scrollOffest来实现的，很容易就发现了调用链。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-[WCTimeLineViewController scrollViewDidEndDragging:willDecelerate:]</div><div class="line">	-[EGORefreshTableHeaderView egoRefreshScrollViewDidEndDragging:]</div><div class="line">		-[WCTimeLineViewController refreshHead]</div><div class="line">			-[WCFacade updateTimelineHead]</div><div class="line">				-[WCTimelineMgr updateDataHead:0]</div><div class="line">					-[WCTimelineDataProvider updateWithReferID:LatestID:]</div><div class="line">					-[WCTimelineDataProvider requestForSnsTimeLineRequest:minID:lastRequestTime:]</div></pre></td></tr></table></figure>
+<p>进入<code>-[WCTimelineDataProvider requestForSnsTimeLineRequest:minID:lastRequestTime:]</code><br>可以看到，朋友圈的刷新是通过创建SnsTimeLineRequest，然后监听请求响应进行下一步处理、显示。<br>那么，要实现在Mac上刷朋友圈的目的，最基础也是最重要的，就是要发送SnsTimeLineRequest，然后监听SnsTimeLineResponse。<br>那么，Mac端微信是怎么创建请求，然后监听响应的呢。<br>我在-[GetCDNDnsRequest init]下了个断点  </p>
+<p><img src="images/4.png" alt=""></p>
+<p>之后在-[CdnComMgr GetCdnDnsInfo]中可以看到，大概发网络请求的流程是</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">GetCDNDnsRequest *request = [[GetCDNDnsRequest alloc] init];</div><div class="line">request.baseRequest = [MMCGIRequestUtil InitBaseRequestWithScene:0x0];</div><div class="line">MMCGIWrap *cgiWrap = [[MMCGIWrap alloc] init];</div><div class="line">[cgiWrap setM_requestPb:request];</div><div class="line">[cgiWrap setM_functionId:0x*];</div><div class="line">[[[MMServiceCenter defaultCenter] getService:[MMCGIService class] RequestCGI: cgiWrap delegate:self];</div></pre></td></tr></table></figure>
+<p>剩下的就是在iOS中确认SnsTimeLineRequest的参数了。</p>
+<h2 id="一鼓作气"><a href="#一鼓作气" class="headerlink" title="一鼓作气"></a>一鼓作气</h2><p>万事俱备，只欠东风！  </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@interface MMTimeLineMgr () &lt;MMCGIDelegate, MMService&gt;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">- (void)updateTimeLineHead &#123;</div><div class="line">    SnsTimeLineRequest *request = [[CBGetClass(SnsTimeLineRequest) alloc] init];</div><div class="line">    request.baseRequest = [CBGetClass(MMCGIRequestUtil) InitBaseRequestWithScene:0];</div><div class="line">    request.clientLatestId = 0;</div><div class="line">    request.firstPageMd5 = @&quot;&quot;;</div><div class="line">    request.lastRequestTime = 0;</div><div class="line">    request.maxId = 0;</div><div class="line">    request.minFilterId = 0;</div><div class="line">    </div><div class="line">    MMCGIWrap *cgiWrap = [[CBGetClass(MMCGIWrap) alloc] init];</div><div class="line">    cgiWrap.m_requestPb = request;</div><div class="line">    cgiWrap.m_functionId = 211;</div><div class="line">    </div><div class="line">    MMCGIService *cgiService = [[CBGetClass(MMServiceCenter) defaultCenter] getService:CBGetClass(MMCGIService)];</div><div class="line">    NSUInteger sessionId = [cgiService RequestCGI:cgiWrap delegate:self];</div><div class="line">    NSLog(@&quot;%lu&quot;, (unsigned long)sessionId);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)OnResponseCGI:(BOOL)arg1 sessionId:(unsigned int)arg2 cgiWrap:(id)arg3 &#123;</div><div class="line">    NSLog(@&quot;%d %d %@&quot;, arg1, arg2, arg3);</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="Command-R"><a href="#Command-R" class="headerlink" title="Command + R !!!"></a>Command + R !!!</h3><p>满怀希望，按下两个键，结果。。。sessionId为0！！！<br>进入-[MMCGIService RequestCGI:delegate:] 可以看到，开始请求前需要从MMCGIConfig找到对应的MMCGIItem，很明显，找不到。没关系，照猫画虎，给它new一个就是了。</p>
+<p><img src="images/5.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@implementation NSObject (MacWeChatTimeLinePlugin)</div><div class="line"></div><div class="line">#pragma mark - MMCGIConfig</div><div class="line"></div><div class="line">- (const struct MMCGIItem *)cb_findItemWithFuncInternal:(int)arg1 &#123;</div><div class="line">    struct MMCGIItem *res = [self cb_findItemWithFuncInternal:arg1];</div><div class="line">    if (arg1 == 211) &#123;</div><div class="line">        res = malloc(sizeof(struct MMCGIItem));</div><div class="line">        res-&gt;_field1 = 211;</div><div class="line">        res-&gt;_field2 = 0;</div><div class="line">        res-&gt;_field3 = 0;</div><div class="line">        res-&gt;_field4 = &quot;mmsnstimeline&quot;;</div><div class="line">        res-&gt;_field5 = CBGetClass(SnsTimeLineResponse);</div><div class="line">        res-&gt;_field6 = 1;</div><div class="line">        res-&gt;_field7 = 2;</div><div class="line">        res-&gt;_field8 = 0;</div><div class="line">    &#125;</div><div class="line">    return res;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">static void __attribute__((constructor)) initialize(void) &#123;</div><div class="line">    NSLog(@&quot;++++++++ MacWeChatTimeLinePlugin loaded ++++++++&quot;);</div><div class="line">    CBHookInstanceMethod(MMCGIConfig, @selector(findItemWithFuncInternal:), @selector(cb_findItemWithFuncInternal:));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打断点在<code>-[MMTimeLineMgr OnResponseCGI:sessionId:cgiWrap:]</code>  </p>
+<p><img src="images/6.png" alt="">    </p>
+<p>成功了, 在SnsTimeLineResponse的mutableObjectListList可以看到有10条朋友圈数据，接下来就是将数据处理，显示出来的工作了。</p>
+<h3 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h3><p><img src="images/7.png" alt="">    </p>
+]]></content:encoded>
+      
+      <comments>http://alayshchen.github.io/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>我是如何利用Xcode调试开发微信消息预览插件的</title>
