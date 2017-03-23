@@ -228,28 +228,6 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 
                 <hr>
                 
-                <!-- 多说 Share start -->
-                <div class="ds-share"
-                     style="text-align: right"
-                     data-thread-key="2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/"
-                     data-title="我是如何利用Xcode调试开发微信消息预览插件的"
-                     data-url="http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/"
-                     data-images=""
-                     data-content="平时在微信使用时，经常出现这样的场景：阅读公众号文章时，突然一条好友消息来了。这时一直很纠结，... | Hongbin&#39;s blog ">
-                    <div class="ds-share-inline">
-                        <ul class="ds-share-icons-16">
-                            <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
-                            <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
-                            <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
-                            <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
-                        </ul>
-                        <div class="ds-share-icons-more">
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <!-- 多说 Share end-->
-                
 
                 <ul class="pager">
                     
@@ -267,17 +245,13 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
                 </ul>
 
                 
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/"
-                         data-title="我是如何利用Xcode调试开发微信消息预览插件的"
-                         data-url="http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/">
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
-                
 
+                
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
                 
 
             </div>
@@ -322,25 +296,23 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 </article>
 
 
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'AlayshChen';
 
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "alayshchen";
+    var disqus_identifier = "http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/";
+    var disqus_url = "http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/";
+
     (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
 </script>
-<!-- 多说公共JS代码 end -->
-
+<!-- disqus 公共JS代码 end -->
 
 
 
