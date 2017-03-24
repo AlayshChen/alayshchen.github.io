@@ -8,7 +8,7 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>个人博客</description>
-    <pubDate>Thu, 23 Mar 2017 11:48:26 GMT</pubDate>
+    <pubDate>Fri, 24 Mar 2017 16:15:14 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -18,11 +18,13 @@
       <pubDate>Mon, 06 Mar 2017 16:03:18 GMT</pubDate>
       <description>
       
-        &lt;h2 id=&quot;事出有因&quot;&gt;&lt;a href=&quot;#事出有因&quot; class=&quot;headerlink&quot; title=&quot;事出有因&quot;&gt;&lt;/a&gt;事出有因&lt;/h2&gt;&lt;p&gt;从前，有一款Mac软件，在2014.11.10发布了1.2版本，然后就没有然后了。 可能这期间，Mac微信开发组解散了又重建
+        &lt;p&gt;源码：&lt;a href=&quot;https://github.com/AlayshChen/WeChatPlugin&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;WeChatPlugin&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;事出有因&quot;&gt;&lt;a href=&quot;#事出有因&quot;
       
       </description>
       
-      <content:encoded><![CDATA[<h2 id="事出有因"><a href="#事出有因" class="headerlink" title="事出有因"></a>事出有因</h2><p>从前，有一款Mac软件，在2014.11.10发布了1.2版本，然后就没有然后了。 可能这期间，Mac微信开发组解散了又重建，解散了又重建。。。直到2016.08.16，它终于发布了2.0版本，这就是Mac微信。<br>不可否认，它越来越好用，但它应该可以更好用。例如，对于朋友圈重度用户，在Mac上使用微信聊天之余，浏览下朋友圈，想来也是极好的。<br>也是早在2.0版本，我发现了Mac微信中已经存在朋友圈相关网络接口代码，没想到半年多过去了，它还是这副死样。俗话说得好，自己动手，丰衣足食，干！！！</p>
+      <content:encoded><![CDATA[<p>源码：<a href="https://github.com/AlayshChen/WeChatPlugin" target="_blank" rel="external">WeChatPlugin</a></p>
+<h2 id="事出有因"><a href="#事出有因" class="headerlink" title="事出有因"></a>事出有因</h2><p>从前，有一款Mac软件，在2014.11.10发布了1.2版本，然后就没有然后了。 可能这期间，Mac微信开发组解散了又重建，解散了又重建。。。直到2016.08.16，它终于发布了2.0版本，这就是Mac微信。<br>不可否认，它越来越好用，但它应该可以更好用。例如，对于朋友圈重度用户，在Mac上使用微信聊天之余，浏览下朋友圈，想来也是极好的。<br>也是早在2.0版本，我发现了Mac微信中已经存在朋友圈相关网络接口代码，没想到半年多过去了，它还是这副死样。俗话说得好，自己动手，丰衣足食，干！！！</p>
 <p><img src="images/0.png" alt=""></p>
 <p>注：接下来内容涉及修改微信，相关代码纯属技术研究与爱好，请大家尊重腾讯公司对微信软件的知识产权，不要乱来。</p>
 <h2 id="厉兵秣马"><a href="#厉兵秣马" class="headerlink" title="厉兵秣马"></a>厉兵秣马</h2><p>要想工作做得好,前期基础要打好！  </p>
