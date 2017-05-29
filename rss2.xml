@@ -3,8 +3,8 @@
   xmlns:atom="http://www.w3.org/2005/Atom"
   xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Hongbin</title>
-    <link>http://alayshchen.github.io/</link>
+    <title>Corbin</title>
+    <link>http://corbinchen.com/</link>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>个人博客</description>
@@ -13,8 +13,8 @@
     
     <item>
       <title>记录一次HomeKit智能家居实践</title>
-      <link>http://alayshchen.github.io/2017/05/02/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1HomeKit%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E8%B7%B5/</link>
-      <guid>http://alayshchen.github.io/2017/05/02/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1HomeKit%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E8%B7%B5/</guid>
+      <link>http://corbinchen.com/2017/05/02/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1HomeKit%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E8%B7%B5/</link>
+      <guid>http://corbinchen.com/2017/05/02/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1HomeKit%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E8%B7%B5/</guid>
       <pubDate>Tue, 02 May 2017 07:09:35 GMT</pubDate>
       <description>
       
@@ -47,37 +47,37 @@
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文记录的主要是接入硬件中遇到的问题，其他还有许多由于篇幅问题未做记录，但大部分都可以在官网给出的文档中查到。WWDC2017快了，HomeKit 和 SiriKit 会有什么更新，拭目以待。</p>
 ]]></content:encoded>
       
-      <comments>http://alayshchen.github.io/2017/05/02/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1HomeKit%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E8%B7%B5/#disqus_thread</comments>
+      <comments>http://corbinchen.com/2017/05/02/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1HomeKit%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E5%AE%9E%E8%B7%B5/#disqus_thread</comments>
     </item>
     
     <item>
       <title>如何愉快地在Mac上刷朋友圈</title>
-      <link>http://alayshchen.github.io/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/</link>
-      <guid>http://alayshchen.github.io/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/</guid>
+      <link>http://corbinchen.com/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/</link>
+      <guid>http://corbinchen.com/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/</guid>
       <pubDate>Mon, 06 Mar 2017 16:03:18 GMT</pubDate>
       <description>
       
       </description>
       
-      <comments>http://alayshchen.github.io/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/#disqus_thread</comments>
+      <comments>http://corbinchen.com/2017/03/07/%E5%A6%82%E4%BD%95%E6%84%89%E5%BF%AB%E5%9C%B0%E5%9C%A8Mac%E4%B8%8A%E5%88%B7%E6%9C%8B%E5%8F%8B%E5%9C%88/#disqus_thread</comments>
     </item>
     
     <item>
       <title>没有微信小程序内测号？没关系</title>
-      <link>http://alayshchen.github.io/2016/09/27/%E6%B2%A1%E6%9C%89%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%86%85%E6%B5%8B%E5%8F%B7%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB/</link>
-      <guid>http://alayshchen.github.io/2016/09/27/%E6%B2%A1%E6%9C%89%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%86%85%E6%B5%8B%E5%8F%B7%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB/</guid>
+      <link>http://corbinchen.com/2016/09/27/%E6%B2%A1%E6%9C%89%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%86%85%E6%B5%8B%E5%8F%B7%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB/</link>
+      <guid>http://corbinchen.com/2016/09/27/%E6%B2%A1%E6%9C%89%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%86%85%E6%B5%8B%E5%8F%B7%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB/</guid>
       <pubDate>Tue, 27 Sep 2016 11:00:40 GMT</pubDate>
       <description>
       
       </description>
       
-      <comments>http://alayshchen.github.io/2016/09/27/%E6%B2%A1%E6%9C%89%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%86%85%E6%B5%8B%E5%8F%B7%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB/#disqus_thread</comments>
+      <comments>http://corbinchen.com/2016/09/27/%E6%B2%A1%E6%9C%89%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%86%85%E6%B5%8B%E5%8F%B7%EF%BC%9F%E6%B2%A1%E5%85%B3%E7%B3%BB/#disqus_thread</comments>
     </item>
     
     <item>
       <title>我是如何利用Xcode调试开发微信消息预览插件的</title>
-      <link>http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/</link>
-      <guid>http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/</guid>
+      <link>http://corbinchen.com/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/</link>
+      <guid>http://corbinchen.com/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/</guid>
       <pubDate>Fri, 26 Feb 2016 02:43:34 GMT</pubDate>
       <description>
       
@@ -122,17 +122,17 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">dyld: Library not loaded: @executable_path/libWeChatMsgPreview.dylib</div><div class="line">  Referenced from: /var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/WeChat</div><div class="line">  Reason: no suitable image found.  Did find:</div><div class="line">	/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib: mmap() errno=1 validating first page of &apos;/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib&apos;</div><div class="line">	/private/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib: mmap() errno=1 validating first page of &apos;/private/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib&apos;</div></pre></td></tr></table></figure>
 <p>原因：签名不对，需保持重签名时<code>codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app/${LIBNAME}
 codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app</code>证书一致  </p>
-<p>脚本中涉及到的WeChat-dump-arm64.ipa需要从越狱机器中提取。<a href="http://alayshchen.github.io/2015/11/05/Resign-AppStore-App/">对App Store App进行重签名–解密[上]</a></p>
+<p>脚本中涉及到的WeChat-dump-arm64.ipa需要从越狱机器中提取。<a href="http://alayshchen.github.io/2015/11/05/Resign-AppStore-App/" target="_blank" rel="external">对App Store App进行重签名–解密[上]</a></p>
 <h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><p><a href="https://github.com/Tyilo/insert_dylib" target="_blank" rel="external">insert_dylib</a><br><a href="http://www.cocoachina.com/industry/20140211/7800_4.html" target="_blank" rel="external">iOS安全攻防（十二）：iOS7的动态库注入</a></p>
 ]]></content:encoded>
       
-      <comments>http://alayshchen.github.io/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/#disqus_thread</comments>
+      <comments>http://corbinchen.com/2016/02/26/%E6%88%91%E6%98%AF%E5%A6%82%E4%BD%95%E5%88%A9%E7%94%A8Xcode%E8%B0%83%E8%AF%95%E5%BC%80%E5%8F%91%E5%BE%AE%E4%BF%A1%E6%B6%88%E6%81%AF%E9%A2%84%E8%A7%88%E6%8F%92%E4%BB%B6%E7%9A%84/#disqus_thread</comments>
     </item>
     
     <item>
       <title>对App Store App进行重签名--解密</title>
-      <link>http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/</link>
-      <guid>http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/</guid>
+      <link>http://corbinchen.com/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/</link>
+      <guid>http://corbinchen.com/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/</guid>
       <pubDate>Thu, 05 Nov 2015 13:45:41 GMT</pubDate>
       <description>
       
@@ -170,7 +170,7 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 </ol>
 ]]></content:encoded>
       
-      <comments>http://alayshchen.github.io/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/#disqus_thread</comments>
+      <comments>http://corbinchen.com/2015/11/05/%E5%AF%B9App-Store-App%E8%BF%9B%E8%A1%8C%E9%87%8D%E7%AD%BE%E5%90%8D-%E8%A7%A3%E5%AF%86/#disqus_thread</comments>
     </item>
     
   </channel>

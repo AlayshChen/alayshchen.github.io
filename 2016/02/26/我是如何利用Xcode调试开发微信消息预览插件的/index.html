@@ -13,16 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="Hongbin" href="/rss2.xml">
+    <link rel="alternate" type="application/atom+xml" title="Corbin" href="/rss2.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        我是如何利用Xcode调试开发微信消息预览插件的｜Hongbin&#39;s blog
+        我是如何利用Xcode调试开发微信消息预览插件的｜Corbin&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/">
+    <link rel="canonical" href="http://corbinchen.com/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -56,7 +56,7 @@
             </button>
             <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
-                    Hongbin
+                    Corbin
                 </span>
                 's Blog
             </a>
@@ -158,7 +158,7 @@
                     <h1>我是如何利用Xcode调试开发微信消息预览插件的</h1>
                     
                     <span class="meta">
-                         作者 Hongbin Chen
+                         作者 Corbin Chen
                         <span>
                           日期 2016-02-26
                          </span>
@@ -223,7 +223,7 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">dyld: Library not loaded: @executable_path/libWeChatMsgPreview.dylib</div><div class="line">  Referenced from: /var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/WeChat</div><div class="line">  Reason: no suitable image found.  Did find:</div><div class="line">	/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib: mmap() errno=1 validating first page of &apos;/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib&apos;</div><div class="line">	/private/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib: mmap() errno=1 validating first page of &apos;/private/var/mobile/Containers/Bundle/Application/F62EF4DE-7A8E-4564-8839-7FED32FB0927/WeChat.app/libWeChatMsgPreview.dylib&apos;</div></pre></td></tr></table></figure>
 <p>原因：签名不对，需保持重签名时<code>codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app/${LIBNAME}
 codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=entitlements.plist Payload/WeChat.app</code>证书一致  </p>
-<p>脚本中涉及到的WeChat-dump-arm64.ipa需要从越狱机器中提取。<a href="http://alayshchen.github.io/2015/11/05/Resign-AppStore-App/">对App Store App进行重签名–解密[上]</a></p>
+<p>脚本中涉及到的WeChat-dump-arm64.ipa需要从越狱机器中提取。<a href="http://alayshchen.github.io/2015/11/05/Resign-AppStore-App/" target="_blank" rel="external">对App Store App进行重签名–解密[上]</a></p>
 <h3 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h3><p><a href="https://github.com/Tyilo/insert_dylib" target="_blank" rel="external">insert_dylib</a><br><a href="http://www.cocoachina.com/industry/20140211/7800_4.html" target="_blank" rel="external">iOS安全攻防（十二）：iOS7的动态库注入</a></p>
 
                 <hr>
@@ -301,8 +301,8 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "alayshchen";
-    var disqus_identifier = "http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/";
-    var disqus_url = "http://alayshchen.github.io/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/";
+    var disqus_identifier = "http://corbinchen.com/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/";
+    var disqus_url = "http://corbinchen.com/2016/02/26/我是如何利用Xcode调试开发微信消息预览插件的/";
 
     (function () {
         var dsq = document.createElement('script');
@@ -366,7 +366,7 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Hongbin 2017
+                    Copyright &copy; Corbin 2017
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -403,7 +403,7 @@ codesign -fs &quot;iPhone Developer: *** (***)&quot; --no-strict --entitlements=
 <script>
     // only load tagcloud.js in tag.html
     if($('#tag_cloud').length !== 0){
-        async("http://alayshchen.github.io/js/jquery.tagcloud.js",function(){
+        async("http://corbinchen.com/js/jquery.tagcloud.js",function(){
             $.fn.tagcloud.defaults = {
                 //size: {start: 1, end: 1, unit: 'em'},
                 color: {start: '#bbbbee', end: '#0085a1'},
